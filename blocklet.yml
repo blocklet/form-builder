@@ -1,0 +1,41 @@
+name: form-builder
+title: Form Builder
+description: Form builder on top of formily and designable
+group: static
+main: dist
+author:
+  name: wangshijun
+  email: shijun@arcblock.io
+specVersion: 1.2.7
+version: 0.1.0
+logo: logo.png
+files:
+  - README.md
+  - screenshots
+interfaces:
+  - type: web
+    name: publicUrl
+    path: /
+    prefix: '*'
+    port: BLOCKLET_PORT
+    protocol: http
+did: z8iZva6oERHPw7qveUwTBKcY8DqUUtcXheBX8
+community: ''
+documentation: ''
+homepage: ''
+license: ''
+payment:
+  price: []
+  share: []
+timeout:
+  start: 60
+requirements:
+  server: '>=1.7.0'
+  os: '*'
+  cpu: '*'
+environments: []
+capabilities:
+  clusterMode: false
+  component: true
+screenshots: []
+components: []
