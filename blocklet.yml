@@ -37,5 +37,8 @@ environments: []
 capabilities:
   clusterMode: false
   component: true
-screenshots: []
+screenshots:
+  - editor.png
 components: []
+scripts:
+  dev: npm run dev
