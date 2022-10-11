@@ -1,7 +1,7 @@
 {
   "name": "form-builder",
   "private": true,
-  "version": "0.0.2",
+  "version": "0.1.1",
   "type": "module",
   "scripts": {
     "dev": "vite --port $BLOCKLET_PORT",
@@ -9,6 +9,7 @@
     "bundle": "npm run build && blocklet bundle --zip --create-release",
     "deploy": "npm run bundle && blocklet deploy .blocklet/bundle",
     "upload": "npm run bundle && blocklet upload .blocklet/release/blocklet.json",
+    "bump": "blocklet version patch && npm version patch",
     "preview": "vite preview"
   },
   "dependencies": {
