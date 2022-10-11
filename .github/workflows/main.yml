@@ -33,5 +33,5 @@ jobs:
           skip-release: true
           skip-readme: true
           bundle-command: npm run bundle
-          store-endpoint: ${{ secrets.STORE_ENDPOINT_PROD }}
-          store-access-token: ${{ secrets.STORE_ACCESS_TOKEN_PROD }}
+          store-endpoint: ${{ secrets.STORE_ENDPOINT_TEST }}
+          store-access-token: ${{ secrets.STORE_ACCESS_TOKEN_TEST }}
