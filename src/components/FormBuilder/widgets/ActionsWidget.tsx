@@ -40,16 +40,9 @@ export const ActionsWidget = observer(() => {
       <Button
         type="primary"
         onClick={() => {
-          saveSchema(schemaKey, designer);
-          if (isDefaultSchemaKey === false) {
-            setTimeout(() => {
-              const parent = window.self;
-              parent.opener = window.self;
-              parent.close();
-            }, 2000);
-          }
+          saveSchema(schemaKey, designer, !isDefaultSchemaKey);
         }}>
-        <TextWidget>Save</TextWidget>
+        <TextWidget>{isDefaultSchemaKey ? 'Save' : 'Save & Close'}</TextWidget>
       </Button>
     </Space>
   );
