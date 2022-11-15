@@ -5,8 +5,9 @@ import { useDesigner, TextWidget } from '@designable/react';
 import { GlobalRegistry } from '@designable/core';
 import { observer } from '@formily/react';
 import { useLocalStorage, useSearchParam } from 'react-use';
+import { transformToSchema, transformToTreeNode } from '@designable/formily-transformer';
 
-import { loadInitialSchema, saveSchema } from '../service';
+import { loadSchema, saveSchema } from '../service';
 import useSchemaKey from '../../../hooks/useSchemaKey';
 
 const LOCALE_MAP = { en: 'en-us', zh: 'zh-cn' };
@@ -16,11 +17,13 @@ export const ActionsWidget = observer(() => {
   const param = useSearchParam('locale');
   const locale = LOCALE_MAP[param] || 'en-us';
   const [persisted, setPersisted] = useLocalStorage('form-builder-locale', locale);
-  const [schemaKey, isDefaultSchemaKey] = useSchemaKey();
+  const [schemaKey, storage, isDefaultSchemaKey] = useSchemaKey();
 
   useEffect(() => {
-    loadInitialSchema(schemaKey, designer);
-  }, []);
+    loadSchema(schemaKey, storage).then(schema => {
+      designer.setCurrentTree(transformToTreeNode(schema));
+    });
+  }, [schemaKey]);
 
   const supportLocales = ['zh-cn', 'en-us'];
 
@@ -52,7 +55,8 @@ export const ActionsWidget = observer(() => {
       <Button
         type="primary"
         onClick={() => {
-          saveSchema(schemaKey, designer, !isDefaultSchemaKey);
+          const schema = transformToSchema(designer.getCurrentTree());
+          saveSchema(schemaKey, storage, schema, !isDefaultSchemaKey);
         }}>
         <TextWidget>{isDefaultSchemaKey ? 'Save' : 'Save & Close'}</TextWidget>
       </Button>
