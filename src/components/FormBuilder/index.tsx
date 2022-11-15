@@ -50,6 +50,7 @@ import {
   FormLayout,
   FormGrid,
 } from '@designable/formily-antd';
+import { transformToSchema } from '@designable/formily-transformer';
 import { LogoWidget, ActionsWidget, PreviewWidget, SchemaEditorWidget, MarkupSchemaWidget } from './widgets';
 import { saveSchema } from './service';
 import useSchemaKey from '../../hooks/useSchemaKey';
@@ -76,7 +77,7 @@ GlobalRegistry.registerDesignerLocales({
 });
 
 export default function FormBuilder() {
-  const [schemaKey] = useSchemaKey();
+  const [schemaKey, storage] = useSchemaKey();
 
   const engine = useMemo(
     () =>
@@ -88,7 +89,8 @@ export default function FormBuilder() {
               [KeyCode.Control, KeyCode.S],
             ],
             handler(ctx) {
-              saveSchema(schemaKey, ctx.engine);
+              const schema = transformToSchema(ctx.engine.getCurrentTree());
+              saveSchema(schemaKey, storage, schema);
             },
           }),
         ],
@@ -96,6 +98,7 @@ export default function FormBuilder() {
       }),
     []
   );
+
   return (
     <Designer engine={engine}>
       <StudioPanel logo={<LogoWidget />} actions={<ActionsWidget />}>
