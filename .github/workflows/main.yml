@@ -23,7 +23,7 @@ jobs:
       - run: npm add -g @blocklet/cli
       - run: yarn
 
-      - name: Blocklet workflow
+      - name: Publish Blocklet
         uses: blocklet/action-workflow@v1
         with:
           skip-deps: false
@@ -35,3 +35,9 @@ jobs:
           bundle-command: npm run bundle
           store-endpoint: ${{ secrets.STORE_ENDPOINT_TEST }}
           store-access-token: ${{ secrets.STORE_ACCESS_TOKEN_TEST }}
+
+      - name: Publish Package
+        run: |
+          npm config set '//registry.npmjs.org/:_authToken' "${{ secrets.NPM_TOKEN }}"
+          node publish.js
+          cd .package && npm publish
