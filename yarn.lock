@@ -1591,6 +1591,11 @@ is-number@^7.0.0:
   resolved "https://registry.yarnpkg.com/is-number/-/is-number-7.0.0.tgz#7535345b896734d5f80c4d06c50955527a14f12b"
   integrity sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==
 
+is-var-name@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/is-var-name/-/is-var-name-2.0.0.tgz#28cad24d1e4021640bc54668b2de84a9f9b0d776"
+  integrity sha512-U+7mpdfaV4Qz2hDNy1Vt7TjWwdIp6br/w7CUlTnyMdsJq+IOSZrh+RsJNlSSckPAnTllhWxpiqC7VSxVTbcr2Q==
+
 is-what@^3.14.1:
   version "3.14.1"
   resolved "https://registry.yarnpkg.com/is-what/-/is-what-3.14.1.tgz#e1222f46ddda85dead0fd1c9df131760e77755c1"

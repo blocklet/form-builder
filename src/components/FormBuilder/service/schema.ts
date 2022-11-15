@@ -1,12 +1,13 @@
 import axios from 'axios';
 import { message } from 'antd';
+import isVarName from 'is-var-name';
 import { IFormilySchema } from '@designable/formily-transformer';
 
 export const saveSchema = async (key: string, storage: string, schema: IFormilySchema, close = false) => {
   const { properties } = schema.schema;
   const assertPropertyName = x => {
-    if (typeof x.name === 'undefined') {
-      throw new Error(`You must specify a field name for ${x.title}`);
+    if (isVarName(x.name) === false) {
+      throw new Error(`You must specify a valid field name for "${x.title}", current: "${x.name}"`);
     }
   }
 
@@ -20,7 +21,7 @@ export const saveSchema = async (key: string, storage: string, schema: IFormilyS
       }
     });
   } catch (err) {
-    message.error(err.message);
+    message.error(err.message, 5);
     return;
   }
 
