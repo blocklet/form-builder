@@ -1,7 +1,29 @@
 import axios from 'axios';
 import { message } from 'antd';
+import { IFormilySchema } from '@designable/formily-transformer';
 
-export const saveSchema = async (key: string, storage: string, schema: any, close = false) => {
+export const saveSchema = async (key: string, storage: string, schema: IFormilySchema, close = false) => {
+  const { properties } = schema.schema;
+  const assertPropertyName = x => {
+    if (typeof x.name === 'undefined') {
+      throw new Error(`You must specify a field name for ${x.title}`);
+    }
+  }
+
+  try {
+    Object.keys(properties).forEach(key => {
+      assertPropertyName(properties[key]);
+      if (typeof properties[key].properties === 'object') {
+        Object.keys(properties[key].properties).forEach(k => {
+          assertPropertyName(properties[key].properties[k]);
+        });
+      }
+    });
+  } catch (err) {
+    message.error(err.message);
+    return;
+  }
+
   if (storage === 'ls') {
     localStorage.setItem(key, JSON.stringify(schema));
     if (close) {
