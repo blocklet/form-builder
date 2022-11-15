@@ -3,6 +3,8 @@ import { message } from 'antd';
 import isVarName from 'is-var-name';
 import { IFormilySchema } from '@designable/formily-transformer';
 
+const api = axios.create({ timeout: 8000 });
+
 export const saveSchema = async (key: string, storage: string, schema: IFormilySchema, close = false) => {
   const { properties } = schema.schema;
   const assertPropertyName = x => {
@@ -31,7 +33,7 @@ export const saveSchema = async (key: string, storage: string, schema: IFormilyS
       localStorage.setItem(`${key}.done`, 'true');
     }
   } else if (storage === 'api') {
-    await axios.post(key, schema);
+    await api.put(key, schema);
   }
 
   if (close) {
@@ -50,7 +52,7 @@ export const loadSchema = async (key: string, storage: string) => {
     if (storage === 'ls') {
       return JSON.parse(localStorage.getItem(key));
     } else if (storage === 'api') {
-      const { data } = await axios.get(key,);
+      const { data } = await api.get(key);
       return typeof data === 'object' ? data : {};
     }
   } catch (err) {
