@@ -5,25 +5,36 @@ import { IFormilySchema } from '@designable/formily-transformer';
 
 const api = axios.create({ timeout: 8000 });
 
+export const formatError = (err) => {
+  if (Array.isArray(err.errors)) {
+    return err.errors.map((x) => x.message).join('\n');
+  }
+  if (err.response) {
+    return err.response.data.error;
+  }
+
+  return err.message;
+};
+
 export const saveSchema = async (key: string, storage: string, schema: IFormilySchema, close = false) => {
   const { properties } = schema.schema;
-  const assertPropertyName = x => {
+  const assertPropertyName = (x) => {
     if (isVarName(x.name) === false) {
       throw new Error(`You must specify a valid field name for "${x.title}", current: "${x.name}"`);
     }
-  }
+  };
 
   try {
-    Object.keys(properties).forEach(key => {
+    Object.keys(properties).forEach((key) => {
       assertPropertyName(properties[key]);
       if (typeof properties[key].properties === 'object') {
-        Object.keys(properties[key].properties).forEach(k => {
+        Object.keys(properties[key].properties).forEach((k) => {
           assertPropertyName(properties[key].properties[k]);
         });
       }
     });
   } catch (err) {
-    message.error(err.message, 5);
+    message.error(formatError(err), 5);
     return;
   }
 
@@ -33,8 +44,15 @@ export const saveSchema = async (key: string, storage: string, schema: IFormilyS
       localStorage.setItem(`${key}.done`, 'true');
     }
   } else if (storage === 'api') {
-    await api.put(key, schema);
+    try {
+      await api.put(key, schema);
+    } catch (err) {
+      message.error(formatError(err), 5);
+      return;
+    }
   }
+
+  message.success('Form saved successfully');
 
   if (close) {
     setTimeout(() => {
@@ -43,20 +61,19 @@ export const saveSchema = async (key: string, storage: string, schema: IFormilyS
       parent.close();
     }, 1000);
   }
-
-  message.success('Form saved successfully');
 };
 
 export const loadSchema = async (key: string, storage: string) => {
-  try {
-    if (storage === 'ls') {
-      return JSON.parse(localStorage.getItem(key));
-    } else if (storage === 'api') {
+  if (storage === 'ls') {
+    return JSON.parse(localStorage.getItem(key));
+  } else if (storage === 'api') {
+    try {
       const { data } = await api.get(key);
       return typeof data === 'object' ? data : {};
+    } catch (err) {
+      message.error(formatError(err), 5);
     }
-  } catch (err) {
-    console.error(err);
-    return {};
   }
+
+  return {};
 };
