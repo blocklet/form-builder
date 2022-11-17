@@ -16,23 +16,25 @@ export const formatError = (err) => {
   return err.message;
 };
 
+export const assertInputFieldName = properties => {
+  Object.keys(properties).forEach(key => {
+    const property = properties[key];
+    if (property.properties) {
+      assertInputFieldName(property.properties);
+    }
+    if (property['x-decorator'] === 'FormItem') {
+      if (isVarName(property.name) === false) {
+        throw new Error(`You must specify a valid field name for "${property.title}", current: "${property.name}"`);
+      }
+    }
+  });
+}
+
 export const saveSchema = async (key: string, storage: string, schema: IFormilySchema, close = false) => {
   const { properties } = schema.schema;
-  const assertPropertyName = (x) => {
-    if (isVarName(x.name) === false) {
-      throw new Error(`You must specify a valid field name for "${x.title}", current: "${x.name}"`);
-    }
-  };
 
   try {
-    Object.keys(properties).forEach((key) => {
-      assertPropertyName(properties[key]);
-      if (typeof properties[key].properties === 'object') {
-        Object.keys(properties[key].properties).forEach((k) => {
-          assertPropertyName(properties[key].properties[k]);
-        });
-      }
-    });
+    assertInputFieldName(properties)
   } catch (err) {
     message.error(formatError(err), 5);
     return;
