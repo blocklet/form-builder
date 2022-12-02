@@ -17,7 +17,7 @@ export const ActionsWidget = observer(() => {
   const param = useSearchParam('locale');
   const locale = LOCALE_MAP[param] || 'en-us';
   const [persisted, setPersisted] = useLocalStorage('form-builder-locale', locale);
-  const [schemaKey, storage, isDefaultSchemaKey] = useSchemaKey();
+  const [schemaKey, storage, closeOnSave] = useSchemaKey();
 
   useEffect(() => {
     loadSchema(schemaKey, storage).then(schema => {
@@ -56,9 +56,9 @@ export const ActionsWidget = observer(() => {
         type="primary"
         onClick={() => {
           const schema = transformToSchema(designer.getCurrentTree());
-          saveSchema(schemaKey, storage, schema, !isDefaultSchemaKey);
+          saveSchema(schemaKey, storage, schema, closeOnSave);
         }}>
-        <TextWidget>{isDefaultSchemaKey ? 'Save' : 'Save & Close'}</TextWidget>
+        <TextWidget>{closeOnSave ? 'Save & Close' : 'Save'}</TextWidget>
       </Button>
     </Space>
   );
