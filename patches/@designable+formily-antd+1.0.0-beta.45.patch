@@ -1,0 +1,88 @@
+diff --git a/node_modules/@designable/formily-antd/esm/components/Field/shared.js b/node_modules/@designable/formily-antd/esm/components/Field/shared.js
+index 4cf74a0..808b07d 100644
+--- a/node_modules/@designable/formily-antd/esm/components/Field/shared.js
++++ b/node_modules/@designable/formily-antd/esm/components/Field/shared.js
+@@ -137,6 +137,11 @@ export var createFieldSchema = function (component, decorator) {
+                         'x-decorator': 'FormItem',
+                         'x-component': 'Switch',
+                     },
++                    shared: {
++                        type: 'boolean',
++                        'x-decorator': 'FormItem',
++                        'x-component': 'Switch',
++                    },
+                 },
+             } }, createComponentSchema(component, decorator)),
+     };
+diff --git a/node_modules/@designable/formily-antd/esm/locales/Field.js b/node_modules/@designable/formily-antd/esm/locales/Field.js
+index 952072f..788d42a 100644
+--- a/node_modules/@designable/formily-antd/esm/locales/Field.js
++++ b/node_modules/@designable/formily-antd/esm/locales/Field.js
+@@ -4,6 +4,7 @@ export var Field = {
+             name: '字段标识',
+             title: '标题',
+             required: '必填',
++            shared: '前后端共享',
+             description: '描述',
+             default: '默认值',
+             enum: '可选项',
+@@ -102,6 +103,7 @@ export var Field = {
+             name: 'Name',
+             title: 'Title',
+             required: 'Required',
++            shared: 'Share with browser',
+             description: 'Description',
+             default: 'Default',
+             enum: 'Options',
+@@ -215,6 +217,7 @@ export var Field = {
+             name: '이름',
+             title: '제목',
+             required: '필수항목',
++            shared: '브라우저와공유',
+             description: '설명',
+             default: '기본 값',
+             enum: 'Options',
+diff --git a/node_modules/@designable/formily-antd/lib/components/Field/shared.js b/node_modules/@designable/formily-antd/lib/components/Field/shared.js
+index 4a20158..62bd328 100644
+--- a/node_modules/@designable/formily-antd/lib/components/Field/shared.js
++++ b/node_modules/@designable/formily-antd/lib/components/Field/shared.js
+@@ -141,6 +141,11 @@ var createFieldSchema = function (component, decorator) {
+                         'x-decorator': 'FormItem',
+                         'x-component': 'Switch',
+                     },
++                    shared: {
++                        type: 'boolean',
++                        'x-decorator': 'FormItem',
++                        'x-component': 'Switch',
++                    },
+                 },
+             } }, exports.createComponentSchema(component, decorator)),
+     };
+diff --git a/node_modules/@designable/formily-antd/lib/locales/Field.js b/node_modules/@designable/formily-antd/lib/locales/Field.js
+index eccd310..e24d98f 100644
+--- a/node_modules/@designable/formily-antd/lib/locales/Field.js
++++ b/node_modules/@designable/formily-antd/lib/locales/Field.js
+@@ -7,6 +7,7 @@ exports.Field = {
+             name: '字段标识',
+             title: '标题',
+             required: '必填',
++            shared: '前后端共享',
+             description: '描述',
+             default: '默认值',
+             enum: '可选项',
+@@ -105,6 +106,7 @@ exports.Field = {
+             name: 'Name',
+             title: 'Title',
+             required: 'Required',
++            shared: 'Share with browser',
+             description: 'Description',
+             default: 'Default',
+             enum: 'Options',
+@@ -218,6 +220,7 @@ exports.Field = {
+             name: '이름',
+             title: '제목',
+             required: '필수항목',
++            shared: '브라우저와공유',
+             description: '설명',
+             default: '기본 값',
+             enum: 'Options',
