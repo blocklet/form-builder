@@ -7,7 +7,7 @@ author:
   name: wangshijun
   email: shijun@arcblock.io
 specVersion: 1.2.8
-version: 0.1.11
+version: 0.1.12
 logo: logo.png
 files:
   - README.md
@@ -19,6 +19,7 @@ interfaces:
     prefix: '*'
     port: BLOCKLET_PORT
     protocol: http
+    proxyBehavior: service
 did: z8iZva6oERHPw7qveUwTBKcY8DqUUtcXheBX8
 community: ''
 documentation: ''
@@ -43,3 +44,4 @@ screenshots:
 components: []
 scripts:
   dev: npm run dev
+egress: true
